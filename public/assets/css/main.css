@@ -211,19 +211,11 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Disable aos animation delay on mobile devices
---------------------------------------------------------------*/
-@media screen and (max-width: 768px) {
-  [data-aos-delay] {
-    transition-delay: 0 !important;
-  }
-}
-/*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 .header {
   padding: 15px 0;
-  transition: all 0.5s;
+  transition: all 0.2s;
   z-index: 997;
 }
 .header.sticked {

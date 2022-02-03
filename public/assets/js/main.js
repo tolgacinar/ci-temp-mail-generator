@@ -6,7 +6,68 @@
 */
 document.addEventListener('DOMContentLoaded', () => {
   "use strict";
+  const copy_button = document.querySelector("#copy-button");
+  copy_button.addEventListener("click", function(e) {
+    var copyText = document.getElementById("mail-input");
 
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+
+    new Noty({
+      type: 'success',
+      layout: 'topRight',
+      text: 'Panoya Kopyalandı.',
+      timeout: 1500
+    }).show();
+  });
+
+  function countdown(endDate) {
+    let days, hours, minutes, seconds;
+
+    endDate = new Date(endDate).getTime();
+
+    if (isNaN(endDate)) {
+      return;
+    }
+
+    setInterval(calculate, 1000);
+
+    function calculate() {
+      let startDate = new Date().getTime();
+
+      let timeRemaining = parseInt((endDate - startDate) / 1000);
+
+      if (timeRemaining >= 0) {
+        days = parseInt(timeRemaining / 86400);
+        timeRemaining = (timeRemaining % 86400);
+
+        hours = parseInt(timeRemaining / 3600);
+        timeRemaining = (timeRemaining % 3600);
+
+        minutes = parseInt(timeRemaining / 60);
+        timeRemaining = (timeRemaining % 60);
+
+        seconds = parseInt(timeRemaining);
+
+        var mins = minutes < 10 ? "0" + minutes : minutes;
+        var secs = seconds < 10 ? "0" + seconds : seconds;
+        var res = mins + ":" + secs
+
+        document.getElementById("clock").innerHTML = res;
+      } else {
+        return;
+      }
+    }
+  }
+
+  (function() {
+    const input = document.querySelector('#mail-input');
+    countdown(input.dataset.finish);
+  }());
   /**
    * Preloader
    */
@@ -168,12 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   }
 
-  /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
 
   /**
    * Porfolio isotope and filter
@@ -211,87 +266,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   }
-
-  /**
-   * Clients Slider
-   */
-  new Swiper('.clients-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    breakpoints: {
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 40
-      },
-      480: {
-        slidesPerView: 3,
-        spaceBetween: 60
-      },
-      640: {
-        slidesPerView: 4,
-        spaceBetween: 80
-      },
-      992: {
-        slidesPerView: 6,
-        spaceBetween: 120
-      }
-    }
-  });
-
-  /**
-   * Testimonials Slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Testimonials Slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Animation on scroll function and init
-   */
-  function aos_init() {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }
-  window.addEventListener('load', () => {
-    aos_init();
-  });
-
 });

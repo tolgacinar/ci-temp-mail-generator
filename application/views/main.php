@@ -14,9 +14,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
 	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-	<link href="assets/vendor/aos/aos.css" rel="stylesheet">
-	<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-	<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+	<link href="assets/vendor/noty/lib/noty.css" rel="stylesheet">
+	<link href="assets/vendor/noty/lib/themes/mint.css" rel="stylesheet">
 	<link href="assets/css/variables.css" rel="stylesheet">
 	<link href="assets/css/main.css" rel="stylesheet">
 </head>
@@ -42,24 +41,24 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3 d-none d-md-block">
-					<img src="https://dummyimage.com/300x250/890404/fff.png&text=Reklam+Alan%C4%B1" alt="" class="img-fluid w-100">
+					<img src="<?php echo base_url("assets/img/reklam_kare.png"); ?>" alt="" class="img-fluid w-100">
 				</div>
 				<div class="col-12 col-md-6">
 					<div class="w-100 h-100 p-3 justify-content-center d-inline-flex flex-column" style="border: 4px dashed rgba(0, 0, 0, .5); border-radius:5px;">
 						<h2 style="font-size:1.6rem; text-align:center;">Geçici E-posta Adresiniz</h2>
 						<div class="flex-column flex-md-row input-group">
-							<input type="text" readonly="readonly" value="<?php echo $user_data["address"]; ?>" class="form-control w-auto">
-							<button class="btn btn-primary" type="button" id="inputGroupFileAddon03">Kopyala</button>
-							<span class="input-group-text">10:00</span>
+							<input id="mail-input" type="text" data-finish="<?php echo date("Y-m-d H:i:s", $this->session->userdata("lifetime") + 600); ?>" readonly="readonly" value="<?php echo $user_data["address"]; ?>" class="form-control w-auto">
+							<button class="btn btn-primary" type="button" id="copy-button">Kopyala</button>
+							<span id="clock" class="input-group-text">10:00</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3 d-none d-md-block">
-					<img src="https://dummyimage.com/300x250/890404/fff.png&text=Reklam+Alan%C4%B1" alt="" class="img-fluid w-100">
+					<img src="<?php echo base_url("assets/img/reklam_kare.png"); ?>" alt="" class="img-fluid w-100">
 				</div>
 			</div>
 			<div class="row mt-3 d-none d-md-block">
-				<img src="https://dummyimage.com/1280x90/890404/ffffff&text=Reklam+Alan%C4%B1" class="img-fluid w-100" alt="">
+				<img src="<?php echo base_url("assets/img/reklam_yatay.png"); ?>" class="img-fluid w-100" alt="">
 			</div>
 		</div>
 	</section>
@@ -77,7 +76,7 @@
 				</div>
 				<div class="row mt-3">
 					<div class="col d-none d-md-block">
-						<img src="https://dummyimage.com/160x600/890404/ffffff&text=Reklam+Alan%C4%B1" class="w-100 img-fluid" alt="">
+						<img src="<?php echo base_url("assets/img/reklam_dik.png"); ?>" class="w-100 img-fluid" alt="">
 					</div>
 					<div class="col-12 col-md-8">
 						<div class="card">
@@ -86,7 +85,7 @@
 							</div>
 							<div class="card-body faq">
 								<div class="accordion accordion-flush" id="faqlist">
-									<div class="accordion-item">
+									<!-- <div class="accordion-item">
 										<h3 class="accordion-header">
 											<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
 												<i class="bi bi-envelope-fill question-icon"></i>
@@ -98,7 +97,7 @@
 												Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
 											</div>
 										</div>
-									</div>
+									</div> -->
 								</div>
 								<div class="mails py-3">
 									<span class="alert alert-info d-block">Gelen Kutusu boş gibi görünüyor.</span>
@@ -113,7 +112,7 @@
 						</div>
 					</div>
 					<div class="col d-none d-md-block">
-						<img src="https://dummyimage.com/160x600/890404/ffffff&text=Reklam+Alan%C4%B1" class="w-100 img-fluid" alt="">
+						<img src="<?php echo base_url("assets/img/reklam_dik.png"); ?>" class="w-100 img-fluid" alt="">
 					</div>
 				</div>
 			</div>
@@ -127,7 +126,7 @@
 				<div class="row">
 					<div class="col-lg-4">
 						<div class="post-box">
-							<div class="post-img"><img src="https://dummyimage.com/1024x728/890404/ffffff&text=Blog+G%C3%B6rseli" class="img-fluid" alt=""></div>
+							<div class="post-img"><img src="<?php echo base_url("assets/img/blog_gorseli.png"); ?>" class="img-fluid" alt=""></div>
 							<h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>
 							<p>Illum voluptas ab enim placeat. Adipisci enim velit nulla. Vel omnis laudantium. Asperiores eum ipsa est officiis. Modi cupiditate exercitationem qui magni est...</p>
 							<a href="blog-details.html" class="readmore stretched-link">
@@ -138,7 +137,7 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="post-box">
-							<div class="post-img"><img src="https://dummyimage.com/1024x728/890404/ffffff&text=Blog+G%C3%B6rseli" class="img-fluid" alt=""></div>
+							<div class="post-img"><img src="<?php echo base_url("assets/img/blog_gorseli.png"); ?>" class="img-fluid" alt=""></div>
 							<h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>
 							<p>Voluptatem nesciunt omnis libero autem tempora enim ut ipsam id. Odit quia ab eum assumenda. Quisquam omnis aliquid necessitatibus tempora consectetur doloribus...</p>
 							<a href="blog-details.html" class="readmore stretched-link">
@@ -149,7 +148,7 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="post-box">
-							<div class="post-img"><img src="https://dummyimage.com/1024x728/890404/ffffff&text=Blog+G%C3%B6rseli" class="img-fluid" alt=""></div>
+							<div class="post-img"><img src="<?php echo base_url("assets/img/blog_gorseli.png"); ?>" class="img-fluid" alt=""></div>
 							<h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
 							<p>Quia nam eaque omnis explicabo similique eum quaerat similique laboriosam. Quis omnis repellat sed quae consectetur magnam veritatis dicta nihil...</p>
 							<a href="blog-details.html" class="readmore stretched-link">
@@ -297,25 +296,41 @@
 		</div>
 
 	</footer>
-	<!-- End Footer -->
-
 	<a href="#" class="scroll-top d-flex align-items-center justify-content-center">
 		<i class="bi bi-arrow-up-short"></i>
 	</a>
-
 	<div id="preloader"></div>
-
-	<!-- Vendor JS Files -->
+	<script src="assets/js/jquery.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="assets/vendor/aos/aos.js"></script>
-	<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-	<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-	<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-	<script src="assets/vendor/php-email-form/validate.js"></script>
-
-	<!-- Template Main JS File -->
+	<script src="assets/vendor/noty/lib/noty.min.js"></script>
 	<script src="assets/js/main.js"></script>
-
+	<script>
+		setInterval(() => {
+			$.get("api/getStatus", function(data) {
+				console.log(data)
+			});
+			$.get("api/getInbox", {
+				address: $("#mail-input").val()
+			}, function(data) {
+				if (data.length) {
+					$(".mails").empty();
+					$.each(data, function(ind, val) {
+						$(".mails").append(`<div class="accordion-item aos-init aos-animate"">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-${ind}">
+                    <i class="bi bi-envelope-fill question-icon"></i>
+                    ${val.fromName}(${val.fromAddress}) - ${val.subject}
+                  </button>
+                </h3>
+                <div id="faq-content-${ind}" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                  <div class="accordion-body">${val.textHtml}</div>
+                </div>
+              </div>`)
+					});
+				}
+			});
+		}, 5000);
+	</script>
 </body>
 
 </html>

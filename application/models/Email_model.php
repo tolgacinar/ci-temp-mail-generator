@@ -16,7 +16,7 @@ class Email_model extends CI_Model
             $this->setSession([
                 "address" => $user->address,
                 "code"  =>  $user->code,
-                "lifetime"  =>  time(),
+                "lifetime"  =>  strtotime(date("Y-m-d H:i:s")),
             ]);
         } else {
             $this->db->trans_begin();
@@ -29,7 +29,7 @@ class Email_model extends CI_Model
                 $this->setSession([
                     "address" => $address,
                     "code"  =>  $code,
-                    "lifetime" => time()
+                    "lifetime" => strtotime(date("Y-m-d H:i:s"))
                 ]);
                 return TRUE;
             } else {
@@ -72,7 +72,6 @@ class Email_model extends CI_Model
         }
         echo "<pre>";
         $emails = $this->imapclient->get_emails($user);
-        print_r($emails);
         $this->displayEmailsRender($emails, $this->config, $user);
     }
 
