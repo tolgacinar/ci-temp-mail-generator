@@ -15,3 +15,8 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+/src/
+/bin/
+composer.lock
+application/config/temp_email.php
+application/config/database.php

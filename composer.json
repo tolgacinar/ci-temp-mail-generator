@@ -1,0 +1,14 @@
+{
+	"description" : "The CodeIgniter Application with Composer",
+	"require": {
+		"php-imap/php-imap": "*",
+    	"php": "^7.2",
+    	"gnugat/pronounceableword": "*",
+    	"ezyang/htmlpurifier": "^4.9",
+    	"fightbulc/moment": "*",
+		"codeigniter/framework": "3.1.*"
+	},
+	"require-dev": {
+		"mikey179/vfsstream": "1.1.*"
+	}
+}
