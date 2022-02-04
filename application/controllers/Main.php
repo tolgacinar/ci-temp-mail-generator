@@ -6,12 +6,6 @@ class Main extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->config("temp_email");
-		$this->load->library("imapclient");
-		$this->load->library("user");
-		$this->load->model("email_model");
-		$this->load->library("session");
-		$this->load->database();
 	}
 
 	public function index()

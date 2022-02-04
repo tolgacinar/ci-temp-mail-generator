@@ -19,7 +19,11 @@ class Api extends CI_Controller
 		$return_array = [
 			"address" => $this->session->userdata("address"),
 			"lifetime" => $this->session->userdata("lifetime"),
+			"changed"	=>	false,
 		];
+		if (!$this->email_model->checkSession()) {
+			$return_array["changed"] = true;
+		}
 		$this->output
 			->set_content_type('application/json')
 			->set_output(json_encode($return_array));
@@ -72,6 +76,60 @@ class Api extends CI_Controller
 				echo $safeHtml;
 			} else {
 				echo $safeText;
+			}
+		}
+	}
+
+	public function change_email()
+	{
+		if ($this->email_model->checkSession()) {
+		} else {
+			if ($this->email_model->setUser($this->user->get_random_address($this->config->item("domains")))) {
+				redirect("/", "refresh");
+			} else {
+				die("Lütfen sayfayı yenileyin.");
+			}
+		}
+		if (!$this->input->post("is_random")) {
+			$this->load->library("form_validation");
+			$this->form_validation->set_rules("address", "E-posta Adresi", "required|valid_email");
+			if ($this->form_validation->run() === TRUE) {
+				if ($this->email_model->setUser($this->input->post("address"))) {
+					$this->output
+						->set_content_type('application/json')
+						->set_output(json_encode([
+							"status"	=>	true,
+						]));
+				} else {
+					$this->output
+						->set_content_type('application/json')
+						->set_output(json_encode([
+							"status"	=>	false,
+							"message"	=>	"Tekrar deneyin"
+						]));
+				}
+			} else {
+				$this->output
+					->set_content_type('application/json')
+					->set_output(json_encode([
+						"status"	=>	false,
+						"message"	=>	validation_errors()
+					]));
+			}
+		} else {
+			if ($this->email_model->setUser($this->user->get_random_address($this->config->item("domains")))) {
+				$this->output
+					->set_content_type('application/json')
+					->set_output(json_encode([
+						"status"	=>	true,
+					]));
+			} else {
+				$this->output
+					->set_content_type('application/json')
+					->set_output(json_encode([
+						"status"	=>	false,
+						"message"	=>	"Tekrar deneyin"
+					]));
 			}
 		}
 	}

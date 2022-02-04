@@ -18,6 +18,23 @@
 	<link href="assets/vendor/noty/lib/themes/mint.css" rel="stylesheet">
 	<link href="assets/css/variables.css" rel="stylesheet">
 	<link href="assets/css/main.css" rel="stylesheet">
+	<style>
+		textarea:focus,
+		textarea.form-control:focus,
+		input.form-control:focus,
+		input[type=text]:focus,
+		input[type=password]:focus,
+		input[type=email]:focus,
+		input[type=number]:focus,
+		[type=text].form-control:focus,
+		[type=password].form-control:focus,
+		[type=email].form-control:focus,
+		[type=tel].form-control:focus,
+		[contenteditable].form-control:focus {
+			box-shadow: inset 0 -1px 0 #ddd;
+			outline: none;
+		}
+	</style>
 </head>
 
 <body>
@@ -69,7 +86,7 @@
 					<div class="col">
 						<div class="buttons d-flex justify-content-center align-items-center gap-2 bg-dark py-3">
 							<a href="#" class="btn btn-success text-white"><i class="bi bi-arrow-clockwise"></i> Yenile</a>
-							<a href="#" class="btn btn-primary text-white"><i class="bi bi-pencil"></i> Değiştir</a>
+							<button type="button" class="btn btn-primary text-white" data-bs-target="#changeEmailModal" data-bs-toggle="modal"><i class="bi bi-pencil"></i> Değiştir</button>
 							<a href="#" class="btn btn-danger text-white"><i class="bi bi-trash"></i> Sil</a>
 						</div>
 					</div>
@@ -300,6 +317,37 @@
 		<i class="bi bi-arrow-up-short"></i>
 	</a>
 	<div id="preloader"></div>
+	<div class="modal fade" id="changeEmailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Adresi Değiştir</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="form-group">
+							<label for="">E-posta Adresini Değiştir</label>
+							<div class="input-group">
+								<input type="text" name="prefix" class="form-control w-25">
+								<span class="input-group-text">@</span>
+								<select name="domain" class="form-select">
+									<?php foreach ($this->config->item("domains") as $key => $value) : ?>
+										<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary change-email" data-email="random">Rastgele E-posta</button>
+					<button type="button" class="btn btn-info change-email">Kullan</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="assets/js/jquery.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="assets/vendor/noty/lib/noty.min.js"></script>
@@ -307,7 +355,9 @@
 	<script>
 		setInterval(() => {
 			$.get("api/getStatus", function(data) {
-				console.log(data)
+				if (data.changed) {
+					window.location.reload();
+				}
 			});
 			$.get("api/getInbox", {
 				address: $("#mail-input").val()
@@ -329,7 +379,31 @@
 					});
 				}
 			});
-		}, 5000);
+		}, 10000);
+		$("button.change-email").on("click", function(e) {
+			e.preventDefault();
+			var btn = $(this);
+			$.ajax({
+				type: "POST",
+				url: "api/change_email",
+				data: {
+					address: $("input[name=prefix]").val() + "@" + $("select[name=domain]").val(),
+					is_random: btn.data("email") ? btn.data("email") : ""
+				},
+				success: function(response) {
+					if (response.status) {
+						window.location.reload();
+					} else {
+						new Noty({
+							type: 'error',
+							layout: 'topRight',
+							text: response.message,
+							timeout: 1500
+						}).show();
+					}
+				}
+			});
+		})
 	</script>
 </body>
 
