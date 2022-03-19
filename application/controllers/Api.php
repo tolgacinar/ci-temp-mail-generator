@@ -14,21 +14,6 @@ class Api extends CI_Controller
 		$this->load->database();
 	}
 
-	public function getStatus()
-	{
-		$return_array = [
-			"address" => $this->session->userdata("address"),
-			"lifetime" => $this->session->userdata("lifetime"),
-			"changed"	=>	false,
-		];
-		if (!$this->email_model->checkSession()) {
-			$return_array["changed"] = true;
-		}
-		$this->output
-			->set_content_type('application/json')
-			->set_output(json_encode($return_array));
-	}
-
 	public function getInbox()
 	{
 		$address = $this->input->get("address", TRUE);
@@ -82,14 +67,6 @@ class Api extends CI_Controller
 
 	public function change_email()
 	{
-		if ($this->email_model->checkSession()) {
-		} else {
-			if ($this->email_model->setUser($this->user->get_random_address($this->config->item("domains")))) {
-				redirect("/", "refresh");
-			} else {
-				die("Lütfen sayfayı yenileyin.");
-			}
-		}
 		if (!$this->input->post("is_random")) {
 			$this->load->library("form_validation");
 			$this->form_validation->set_rules("address", "E-posta Adresi", "required|valid_email");
